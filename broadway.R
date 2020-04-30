@@ -1,14 +1,10 @@
 
 # Packages
 
-library(tidyverse)
-library(lubridate)
-library(patchwork)
-library(ggdark)
-
-# devtools::install_github("thebioengineer/tidytuesdayR")
-
-devtools::install_github("nsgrantham/ggdark")
+library(tidyverse)  # data manipulation
+library(lubridate)  # dealing with the date variables
+library(patchwork) # combining plots
+library(ggdark)  # dark theme
 
 # Get the Data
 
@@ -19,6 +15,9 @@ grosses <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 glimpse(grosses)
 
 grosses$year <- year(grosses$week_ending)
+
+# Data Viz
+# Graph 1
 
 p1 <- grosses %>%
   filter(show == "The Lion King") %>%
@@ -44,6 +43,8 @@ p1 <- p1 + dark_theme_gray(base_family = "Fira Sans Condensed Light", base_size 
 
 p1
 
+# Graph 2
+
 p2 <- grosses %>%
   filter(show == "The Lion King") %>%
   ggplot(aes(week_ending, avg_ticket_price)) +
@@ -68,6 +69,8 @@ p2 <- p2 + dark_theme_gray(base_family = "Fira Sans Condensed Light", base_size 
 
 p2
 
+# Graph 3
+
 p3<- grosses %>%
   filter(show == "The Lion King") %>%
   ggplot(aes(week_ending, pct_capacity)) +
@@ -88,5 +91,7 @@ p3 <- p3 + dark_theme_gray(base_family = "Fira Sans Condensed Light", base_size 
         axis.ticks = element_blank(),
         legend.key = element_blank(),
         legend.position = c(0.815, 0.27))
+
+# patchwork package in action
 
 p1 + p2 + p3 + plot_layout(ncol=1)
